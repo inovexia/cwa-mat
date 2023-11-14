@@ -8,7 +8,7 @@ import Icon from 'src/@core/components/icon'
 // ** Components
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-
+import TitleSubtitle from 'src/global-component/title-subtitle'
 const AppBarContent = props => {
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
@@ -23,7 +23,9 @@ const AppBarContent = props => {
         ) : null}
 
         <ModeToggler settings={settings} saveSettings={saveSettings} />
+        <TitleSubtitle/>
       </Box>
+    
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         <UserDropdown settings={settings} />
       </Box>

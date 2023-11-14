@@ -7,25 +7,25 @@ const navigation = () => {
     },
     {
       title: 'Course',
-      path: '/second-page',
-      icon: 'mdi:email-outline'
+      path: '/course',
+      icon: 'mdi:book-outline'
     },
     {
-      title: 'Test',
+      title: 'Tests',
       // path: '/second-page',
-      icon: 'mdi:email-outline'
+      icon: 'mdi:notes-outline'
     },
     {
       title: 'User',
-      // path: '/second-page',
-      icon: 'mdi:email-outline'
+      path: '/user',
+      icon: 'mdi:user-outline'
     },
     {
       path: '/acl',
       action: 'read',
       subject: 'acl-page',
-      title: 'Access Control',
-      icon: 'mdi:shield-outline'
+      title: 'Settings',
+      icon: 'mdi:settings-outline'
     }
   ]
 }

@@ -25,17 +25,17 @@ const FooterContent = () => {
         </Box>
         {` by `}
         <LinkStyled target='_blank' href='https://pixinvent.com/'>
-          Pixinvent
+          Inovage
         </LinkStyled>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-          <LinkStyled target='_blank' href='https://themeforest.net/licenses/standard'>
+          {/* <LinkStyled target='_blank' href='https://themeforest.net/licenses/standard'>
             License
           </LinkStyled>
           <LinkStyled target='_blank' href='https://1.envato.market/pixinvent_portfolio'>
             More Themes
-          </LinkStyled>
+          </LinkStyled> */}
           <LinkStyled
             target='_blank'
             href='https://demos.pixinvent.com/materialize-nextjs-admin-template/documentation'

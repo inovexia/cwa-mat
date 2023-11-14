@@ -12,8 +12,8 @@ const AddCommonHeaders = Axios => {
 
 export const AuthenticatedReq = async (url, method, config) => {
   try {
-    console.log('NEXT_API_BASE_URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
-    console.log('NEXT_API_NETWORK:', process.env.NEXT_PUBLIC_API_NETWORK)
+    // console.log('NEXT_API_BASE_URL:', process.env.NEXT_PUBLIC_API_BASE_URL)
+    // console.log('NEXT_API_NETWORK:', process.env.NEXT_PUBLIC_API_NETWORK)
     AddCommonHeaders(Axios)
 
     const res = await Axios({ url, method: method, ...config })

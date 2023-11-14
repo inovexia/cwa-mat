@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import Breadcrumb from '../../../src/global-component/breadcrumb'
+import Breadcrumb from '../../global-component/breadcrumb'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -65,7 +65,7 @@ const columns = [
     flex: 0.25,
     field: 'guid',
     minWidth: 200,
-    headerName: 'Course Name',
+    headerName: 'User Name',
     renderCell: ({ row }) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -90,7 +90,7 @@ const columns = [
     flex: 0.25,
     minWidth: 200,
     field: 'title',
-    headerName: 'Category',
+    headerName: 'User Email',
     renderCell: ({ row }) => (
       <a href={`/`} target='_blank' rel='noopener noreferrer'>
         <Typography variant='body2'>
@@ -103,14 +103,14 @@ const columns = [
     flex: 0.25,
     minWidth: 180,
     field: 'updated_by',
-    headerName: 'Statistics',
+    headerName: 'Role',
     renderCell: ({ row }) => <CourseStatics courseGuid={row.guid} />
   },
   {
     flex: 0.25,
     minWidth: 110,
     field: 'status',
-    headerName: 'Publish',
+    headerName: 'Active',
     renderCell: ({ row }) => <SwitchButton courseStatus={row.status} courseGuid={row.guid} />
   }
 ]
@@ -126,7 +126,7 @@ const renderUserAvatar = row => {
   }
 }
 
-const Course = () => {
+const User = () => {
   const [allCourses, setAllCourses] = useState([])
   console.log(allCourses)
   // view all listing Using API
@@ -155,7 +155,7 @@ const Course = () => {
           <CardContent>
             <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
               <Grid item xs={12} sm={6}>
-                <h2 style={{ margin: 0 }}>Course you are taking</h2>
+                <h2 style={{ margin: 0 }}>All Users</h2>
               </Grid>
               {/* <Grid item xs={12} sm={3}>
                 <FormGroup row>
@@ -189,4 +189,4 @@ const Course = () => {
   )
 }
 
-export default Course
+export default User

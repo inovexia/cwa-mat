@@ -4,9 +4,7 @@ import axios from 'axios'
 const axiosInstance = axios.create({
   baseURL: 'https://developer1.website/dev/cwa/', // Replace with your API base URL
   timeout: 10000, // Set the timeout for requests
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  headers: myHeaders,
 })
 
 // Request interceptor
