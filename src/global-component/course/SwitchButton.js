@@ -7,32 +7,15 @@ import CourseApi from 'src/api/Course'
 // Import your API for course status update if not already imported
 
 const SwitchButton = ({ courseGuid, courseStatus, onUpdateStatus }) => {
+  const [status, setStatus] = useState('')
+   const formData = {
+     status: status
+   }
   const handleConfirmOpen = async () => {
-    const newStatus = courseStatus === '0' ? '1' : '0'
-
     try {
-      // Make an API request to update the course status
-      const formData = new FormData()
-      formData.append('status', newStatus)
-
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: formData
-      }
-      console.log(newStatus)
-      // const response = await fetch(`/course/status/${courseGuid}`, requestOptions)
-      const response = await CourseApi.CourseStatus(requestOptions)
-      if (response.ok) {
-        // Handle success response
-        console.log('Status changed successfully')
-        onUpdateStatus(newStatus) // Update the status in your parent component
-      } else {
-        // Handle error response
-        console.error('Failed to change status')
-      }
+      const res = await CourseApi.courseStatus(formData)
+      console.log(res)
+      
     } catch (error) {
       console.error('Error:', error)
     }

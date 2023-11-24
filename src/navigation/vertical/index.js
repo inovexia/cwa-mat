@@ -12,7 +12,7 @@ const navigation = () => {
     },
     {
       title: 'Tests',
-      // path: '/second-page',
+      path: '/test',
       icon: 'mdi:notes-outline'
     },
     {

@@ -15,29 +15,29 @@ const CourseStatics = ({ courseGuid }) => {
     SubjectList.current()
   }, [])
   // subject length
-  const subjectListLength = subject.length
-  const [tests, setTests] = useState([])
+  // const subjectListLength = subject.length
+  // const [tests, setTests] = useState([])
+  // // subject length
+  // const AllTest = useRef(async () => {
+  //   const res = await TestsApi.getAllTest(courseGuid)
+  //   setTests(res.payload.data)
+  // })
+  // useEffect(() => {
+  //   AllTest.current()
+  // }, [])
   // subject length
-  const AllTest = useRef(async () => {
-    const res = await TestsApi.getAllTest(courseGuid)
-    setTests(res.payload.data)
-  })
-  useEffect(() => {
-    AllTest.current()
-  }, [])
-  // subject length
-  const allTestsLength = tests.length
+  // const allTestsLength = tests.length
   return (
     <Box>
       {/* {roleObj[row.role].icon} */}
       <a href={`/`} target='_blank' rel='noopener noreferrer'>
         <Typography variant='body2'>
-          <h4>Subjects : {subjectListLength}</h4>
+          {/* <h4>Subjects : {subjectListLength}</h4> */}
         </Typography>
       </a>
       <a href={`/`} target='_blank' rel='noopener noreferrer'>
         <Typography variant='body2'>
-          <h4>Tests : {allTestsLength}</h4>
+          {/* <h4>Tests : {allTestsLength}</h4> */}
         </Typography>
       </a>
       <a href={`/`} target='_blank' rel='noopener noreferrer'>

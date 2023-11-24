@@ -13,9 +13,17 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 import Icon from 'src/@core/components/icon'
 import CourseStatics from 'src/global-component/course/CourseStatics'
 import SwitchButton from 'src/global-component/course/SwitchButton'
-
+import TextField from '@mui/material/TextField'
+import Toolbar from 'src/global-component/toolbar'
+import IconButton from '@mui/material/IconButton'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 // ** API
-import CourseApi from 'src/api/Course'
+import UserApi from 'src/api/User'
+import DeleteUser from 'src/global-component/user/deleteuser'
+
 
 const roleObj = {
   admin: {
@@ -63,8 +71,8 @@ const statusObj = {
 const columns = [
   {
     flex: 0.25,
-    field: 'guid',
-    minWidth: 200,
+    field: 'name',
+    minWidth: 100,
     headerName: 'User Name',
     renderCell: ({ row }) => {
       return (
@@ -73,7 +81,7 @@ const columns = [
           <Box>
             <a href={`/managecourse`} target='_blank' rel='noopener noreferrer'>
               <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-                <h3>{row.title}</h3>
+                <h3>{row.username}</h3>
               </Typography>
             </a>
             <a href={`/managecourse`} target='_blank' rel='noopener noreferrer'>
@@ -88,30 +96,52 @@ const columns = [
   },
   {
     flex: 0.25,
-    minWidth: 200,
-    field: 'title',
+    minWidth: 300,
+    field: 'email',
     headerName: 'User Email',
     renderCell: ({ row }) => (
-      <a href={`/`} target='_blank' rel='noopener noreferrer'>
-        <Typography variant='body2'>
-          <h4>Category</h4>
-        </Typography>
-      </a>
+      <Typography variant='body2'>
+        <h4>{row.email}</h4>
+        <h5>{row.mobile}</h5>
+      </Typography>
     )
   },
   {
     flex: 0.25,
     minWidth: 180,
-    field: 'updated_by',
+    field: 'role',
     headerName: 'Role',
-    renderCell: ({ row }) => <CourseStatics courseGuid={row.guid} />
+    renderCell: ({ row }) => (
+      <Typography variant='body2'>
+        <h4>{row.role}</h4>
+      </Typography>
+    )
   },
   {
     flex: 0.25,
     minWidth: 110,
     field: 'status',
-    headerName: 'Active',
-    renderCell: ({ row }) => <SwitchButton courseStatus={row.status} courseGuid={row.guid} />
+    headerName: 'Status',
+    renderCell: ({ row }) => (
+      <Typography variant='body2'>
+        {row.status === 0 && <h4 style={{ color: 'red' }}>Inactive</h4>}
+      </Typography>
+    )
+  },
+  {
+    flex: 0.25,
+    minWidth: 180,
+    field: 'action',
+    headerName: 'Action',
+    renderCell: ({ row }) => (
+      <Box sx={{ display: 'flex', spacing: '2' }}>
+        <a href={`/user/edituser`} variant='contained'>
+          <Icon icon='material-symbols-light:edit' />
+        </a>
+        <DeleteUser />
+        {/* <Icon icon='material-symbols:delete-outline' /> */}
+      </Box>
+    )
   }
 ]
 const renderUserAvatar = row => {
@@ -127,61 +157,130 @@ const renderUserAvatar = row => {
 }
 
 const User = () => {
-  const [allCourses, setAllCourses] = useState([])
-  console.log(allCourses)
+  const [allUsers, setAllUsers] = useState([])
+  console.log(allUsers)
   // view all listing Using API
-  const getCourses = useRef(async () => {
-    const res = await CourseApi.getAllCourses()
-    setAllCourses(res.payload.data)
+  const getUsers = useRef(async () => {
+    const res = await UserApi.getAllUsers()
+    if (res.success === true) {
+      setAllUsers(res.payload.data)
+    }
   })
   useEffect(() => {
-    getCourses.current()
+    getUsers.current()
   }, [])
+
+
+
+
+
 
   return (
     <Grid container spacing={6}>
-      <Grid container item xs={12} sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box>
-          <Breadcrumb />
-        </Box>
-        <Box>
-          <Button component={Link} href={`/course/createcourse`} variant='contained'>
-            Create Course
-          </Button>
-        </Box>
+      <Grid item xs={12} spacing={2} style={{ display: 'flex' }}>
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{
+            gap: 2,
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <TextField
+            label='Search'
+            variant='outlined'
+            fullWidth
+            // value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <IconButton>
+                  <Icon icon='ic:baseline-search' />
+                </IconButton>
+              )
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={9}
+          sx={{
+            gap: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'end'
+          }}
+        >
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id='role-filter-label'>Role</InputLabel>
+              <Select
+                labelId='role-filter-label'
+                id='role-filter'
+                // value={filterRole}
+                onChange={e => setFilterRole(e.target.value)}
+                label='Filter By Role'
+              >
+                <MenuItem value={10}>Publish</MenuItem>
+                <MenuItem value={30}>Delete</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id='status-filter-label'>Status</InputLabel>
+              <Select
+                labelId='status-filter-label'
+                id='status-filter'
+                // value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                label='Filter By Status'
+              >
+                {/* {Object.entries(statusOptions).map(([value, label]) => (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
+                ))} */}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Action</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={age}
+                label='Action'
+                // onChange={handleChange}
+              >
+                <MenuItem value={10}>Publish</MenuItem>
+                <MenuItem value={30}>Delete</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box>
+            <Button variant='contained' color='primary' sx={{ padding: '15px 40px' }}>
+              Save
+            </Button>
+          </Box>
+        </Grid>
       </Grid>
       <Grid item xs={12} spacing={2}>
         <Card>
-          <CardContent>
-            <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <Grid item xs={12} sm={6}>
-                <h2 style={{ margin: 0 }}>All Users</h2>
-              </Grid>
-              {/* <Grid item xs={12} sm={3}>
-                <FormGroup row>
-                  <Switch checked={isChecked} onChange={handleSwitchChange} />
-                </FormGroup>
-                <p>Number of Courses: {courseListLength}</p>
-              </Grid> */}
-            </Grid>
-          </CardContent>
           <DataGrid
             autoHeight
             hideFooter
-            rows={allCourses}
+            rows={allUsers}
             columns={columns}
             getRowId={row => row.guid}
             getRowHeight={() => 'auto'}
-            sx={{ marginTop: '20px' }}
+            // sx={{ marginTop: '20px' }}
             checkboxSelection
             disableRowSelectionOnClick
-            slots={{ toolbar: GridToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-                className: 'custom-toolbar'
-              }
-            }}
           />
         </Card>
       </Grid>

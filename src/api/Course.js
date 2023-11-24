@@ -4,5 +4,5 @@ export default class CourseApi {
   static getAllCourses = async data => await AuthenticatedReq('/course/list', 'GET', data)
   static getSubjectList = async (courseGuid, data) =>
     await AuthenticatedReq(`/course/${courseGuid}/subjects`, 'POST', data)
-  static CourseStatus = async (courseGuid, data) => await AuthenticatedReq(`/course/status/${courseGuid}`, 'POST', data)
+  static courseStatus = async (courseGuid, data) => await AuthenticatedReq(`/course/status/${courseGuid}`, 'POST', data)
 }
