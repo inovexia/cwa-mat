@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
-import FileUploaderSingle from 'src/global-component/file-upload'
+import FileUploaderSingle from 'src/global-component/formelement/file-upload'
 import InputLabel from '@mui/material/InputLabel'
 const CreateCourse = () => {
   return (

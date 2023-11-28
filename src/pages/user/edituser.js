@@ -11,7 +11,7 @@ import Box from '@mui/material/Box'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
-import FileUploaderSingle from 'src/global-component/file-upload'
+import FileUploaderSingle from 'src/global-component/formelement/file-upload'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -40,7 +40,7 @@ const EditUser = () => {
       </Grid>
       <Grid item xs={12} spacing={2}>
         <Card>
-          <CardHeader title='Create User' />
+          <CardHeader title='Edit User' />
           <CardContent>
             <form>
               <Grid container spacing={5}>

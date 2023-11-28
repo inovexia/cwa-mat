@@ -23,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem'
 // ** API
 import UserApi from 'src/api/User'
 import DeleteUser from 'src/global-component/user/deleteuser'
+import SwitchField from 'src/global-component/formelement/Switch'
 
 
 const roleObj = {
@@ -122,11 +123,7 @@ const columns = [
     minWidth: 110,
     field: 'status',
     headerName: 'Status',
-    renderCell: ({ row }) => (
-      <Typography variant='body2'>
-        {row.status === 0 && <h4 style={{ color: 'red' }}>Inactive</h4>}
-      </Typography>
-    )
+    renderCell: ({ row }) => <SwitchField/>
   },
   {
     flex: 0.25,
