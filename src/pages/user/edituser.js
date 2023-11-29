@@ -1,21 +1,9 @@
 import * as React from 'react'
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
-import Breadcrumb from '../../../src/global-component/breadcrumb'
-import Typography from '@mui/material/Typography'
-import Card from '@mui/material/Card'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Link from '@mui/material/Link'
-import Box from '@mui/material/Box'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
+import {Grid,Card,TextField,Button,Link,Box,CardHeader,CardContent,InputLabel,FormControl,Select, MenuItem} from '@mui/material'
+
+// ** Global Components
 import FileUploaderSingle from 'src/global-component/formelement/file-upload'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
 const EditUser = () => {
   const [role, setRole] = React.useState('')
 
@@ -33,9 +21,9 @@ const EditUser = () => {
           {/* <Breadcrumb /> */}
         </Box>
         <Box>
-          <Button component={Link} href={`/user/createuser`} variant='contained'>
+          {/* <Button component={Link} href={`/user/createuser`} variant='contained'>
             Create User
-          </Button>
+          </Button> */}
         </Box>
       </Grid>
       <Grid item xs={12} spacing={2}>

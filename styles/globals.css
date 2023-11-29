@@ -26,3 +26,6 @@ code[class*='language-'] {
   margin-bottom: 20px;
   padding-bottom: 20px;
 } */
+TableRow {
+  background-color: red;
+}
