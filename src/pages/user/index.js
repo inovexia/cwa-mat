@@ -61,6 +61,7 @@ const User = () => {
   useEffect(() => {
     getUsers.current()
   }, [])
+  console.log(allUsers)
 
   return (
     <Grid container spacing={6}>
@@ -84,80 +85,47 @@ const User = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h3>Alesha</h3>
-                    </Typography>
-                    <Typography variant='body2'>
-                      <h5>ALS1452</h5>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h4>ashleshas@inovexia.com</h4>
-                    </Typography>
-                    <Typography variant='body2'>
-                      <h5>9766885356</h5>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h4>Student</h4>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <SwitchField />
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex' }}>
-                      <a href={`/user/edituser`} variant='contained'>
-                        <Icon icon='material-symbols-light:edit' />
-                      </a>
-                      <DeleteUser />
-                    </Box>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h3>Asif</h3>
-                    </Typography>
-                    <Typography variant='body2'>
-                      <h5>ALS1452</h5>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h4>Asifazizs@inovexia.com</h4>
-                    </Typography>
-                    <Typography variant='body2'>
-                      <h5>9766885356</h5>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant='body2'>
-                      <h4>Admin</h4>
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <SwitchField />
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex' }}>
-                      <a href={`/user/edituser`} variant='contained'>
-                        <Icon icon='material-symbols-light:edit' />
-                      </a>
-                      <DeleteUser />
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                {allUsers.map((user, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Checkbox />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant='body2'>
+                        <h3>
+                          {user.first_name} {user.last_name}
+                        </h3>
+                      </Typography>
+                      <Typography variant='body2'>
+                        <h5>{user.guid}</h5>
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant='body2'>
+                        <h4>{user.email}</h4>
+                      </Typography>
+                      <Typography variant='body2'>
+                        <h5>{user.mobile}</h5>
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant='body2'>
+                        <h4 style={{ textTransform: 'uppercase' }}>{user.role}</h4>
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <SwitchField />
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex' }}>
+                        <a href={`/user/edituser`} variant='contained'>
+                          <Icon icon='material-symbols-light:edit' />
+                        </a>
+                        <DeleteUser />
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>

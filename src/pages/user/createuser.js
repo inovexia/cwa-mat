@@ -198,9 +198,11 @@ const CreateUser = () => {
                         defaultValue='student' // Default value set to 'student'
                         render={({ field }) => (
                           <Select {...field} labelId='type-select-label' id='type-select' label='User Role' required>
+                            <MenuItem value='superadmin'>Super Admin</MenuItem>
                             <MenuItem value='admin'>Admin</MenuItem>
-                            <MenuItem value='instructor'>Teacher</MenuItem>
+                            <MenuItem value='instructor'>Instructor</MenuItem>
                             <MenuItem value='student'>Student</MenuItem>
+                            <MenuItem value='parent'>Parent</MenuItem>
                           </Select>
                         )}
                       />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -7,12 +8,11 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
-import { Button } from '@mui/material'
+import { Button, Link } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 
 const Toolbar = () => {
-
   return (
     <Grid container spacing={6}>
       <Grid
@@ -72,7 +72,7 @@ const Toolbar = () => {
           </TextField>
         </Box>
         <Box>
-          <Button variant='contained' color='primary'>
+          <Button variant='contained' color='primary' component={Link} href='/user/createuser'>
             Create User
           </Button>
         </Box>
