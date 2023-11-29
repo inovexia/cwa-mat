@@ -16,7 +16,7 @@ import SwitchButton from 'src/global-component/course/SwitchButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
-
+import SwitchField from 'src/global-component/formelement/Switch'
 // ** API
 import TestApi from 'src/api/Test'
 import AllTestAction from 'src/global-component/test/alltestaction'
@@ -131,14 +131,14 @@ const columns = [
     minWidth: 110,
     field: 'status',
     headerName: 'Publish',
-    renderCell: ({ row }) => <SwitchButton courseStatus={row.status} courseGuid={row.guid} />
+    renderCell: ({ row }) => <SwitchField />
   },
   {
     flex: 0.25,
     minWidth: 150,
     field: 'Action',
     headerName: 'Action',
-    renderCell: ({ row }) => <AllTestAction/>
+    renderCell: ({ row }) => <AllTestAction />
   }
 ]
 const renderUserAvatar = row => {
@@ -169,16 +169,6 @@ const Test = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid container item xs={12} sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box>
-          <Breadcrumb />
-        </Box>
-        <Box>
-          <Button component={Link} href={`/course/createcourse`} variant='contained'>
-            Create Test
-          </Button>
-        </Box>
-      </Grid>
       <Grid item xs={12} spacing={2}>
         <Card>
           <CardContent>

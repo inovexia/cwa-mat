@@ -24,9 +24,9 @@ const SingleUser = () => {
       <Grid item xs={12}>
         <Card>
           <Image
-            src="/images/cover_image.jpg" // Path relative to the public folder
-            alt="Description of the image"
-            width={300} // Set the width of the image
+            src='/images/profile-banner.png' // Path relative to the public folder
+            alt='Description of the image'
+            width={1000} // Set the width of the image
             height={200} // Set the height of the image
           />
           <CardContent
@@ -39,7 +39,12 @@ const SingleUser = () => {
               justifyContent: { xs: 'center', md: 'flex-start' }
             }}
           >
-            {/* <ProfilePicture src={data.profileImg} alt='profile-picture' /> */}
+            <Image
+              src='/images/avatars/1.png' // Path relative to the public folder
+              alt='Description of the image'
+              width={120} // Set the width of the image
+              height={120} // Set the height of the image
+            />
             <Box
               sx={{
                 width: '100%',
