@@ -8,9 +8,8 @@ const AddCommonHeaders = Axios => {
   const token = localStorage.getItem('token')
   if (token && token !== '') Axios.defaults.headers.common['Authorization'] = `Bearer ` + token
   Axios.defaults.headers.common['Network'] = process.env.NEXT_PUBLIC_API_NETWORK
-  // Axios.defaults.headers.common['Cookie'] = 'caapis_session = vrdhei4tkd2jd0gm02anfdriadqhgkqq'
 
-  
+  // Axios.defaults.headers.common['Cookie'] = 'caapis_session = vrdhei4tkd2jd0gm02anfdriadqhgkqq'
 }
 
 export const AuthenticatedReq = async (url, method, config) => {
@@ -20,9 +19,11 @@ export const AuthenticatedReq = async (url, method, config) => {
     AddCommonHeaders(Axios)
 
     const res = await Axios({ url, method: method, ...config })
+
     return res.data
   } catch (err) {
     const reqError = err
+
     return (
       reqError.response?.data ?? {
         success: false,
@@ -35,9 +36,11 @@ export const AuthenticatedReq = async (url, method, config) => {
 export const PublicReq = async (url, method, config) => {
   try {
     const res = await PublicAxios({ url, method: method, ...config })
+
     return res.data
   } catch (err) {
     const reqError = err
+
     return (
       reqError.response?.data ?? {
         success: false,

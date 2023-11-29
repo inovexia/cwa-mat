@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Breadcrumb from '../../global-component/breadcrumb'
@@ -20,11 +21,11 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+
 // ** API
 import UserApi from 'src/api/User'
 import DeleteUser from 'src/global-component/user/deleteuser'
 import SwitchField from 'src/global-component/formelement/Switch'
-
 
 const roleObj = {
   admin: {
@@ -69,6 +70,7 @@ const statusObj = {
   pending: { color: 'warning' },
   inactive: { color: 'secondary' }
 }
+
 const columns = [
   {
     flex: 0.25,
@@ -123,7 +125,7 @@ const columns = [
     minWidth: 110,
     field: 'status',
     headerName: 'Status',
-    renderCell: ({ row }) => <SwitchField/>
+    renderCell: ({ row }) => <SwitchField />
   },
   {
     flex: 0.25,
@@ -141,6 +143,7 @@ const columns = [
     )
   }
 ]
+
 const renderUserAvatar = row => {
   if (row.avatarSrc) {
     return <CustomAvatar src={row.avatarSrc} sx={{ mr: 3, width: 34, height: 34 }} />
@@ -156,6 +159,7 @@ const renderUserAvatar = row => {
 const User = () => {
   const [allUsers, setAllUsers] = useState([])
   console.log(allUsers)
+
   // view all listing Using API
   const getUsers = useRef(async () => {
     const res = await UserApi.getAllUsers()
@@ -166,11 +170,6 @@ const User = () => {
   useEffect(() => {
     getUsers.current()
   }, [])
-
-
-
-
-
 
   return (
     <Grid container spacing={6}>
@@ -250,8 +249,8 @@ const User = () => {
               <Select
                 labelId='demo-simple-select-label'
                 id='demo-simple-select'
-                // value={age}
                 label='Action'
+
                 // onChange={handleChange}
               >
                 <MenuItem value={10}>Publish</MenuItem>
@@ -261,7 +260,7 @@ const User = () => {
           </Box>
           <Box>
             <Button variant='contained' color='primary' sx={{ padding: '15px 40px' }}>
-              Save
+              CREATE USER
             </Button>
           </Box>
         </Grid>

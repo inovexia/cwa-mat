@@ -1,262 +1,266 @@
-import React, { useState } from 'react'
-// ** MUI Imports
-import { Grid,Card,TextField,Button,Link,Box,CardHeader,CardContent,InputLabel,MenuItem,FormControl,Select } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
-import serialize from 'serialize-javascript'
+// ** MUI Imports
+import {
+  Grid,
+  Card,
+  TextField,
+  Button,
+  Link,
+  Box,
+  CardHeader,
+  CardContent,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select
+} from '@mui/material'
+
 // ** API
 import UserApi from 'src/api/User'
+import AuthApi from 'src/api/Auth'
+
 const CreateUser = () => {
-  const [firstName, setFirstName] = useState('')
-  const [firstNameError, setFirstNameError] = useState(false)
-  const [middleName, setMiddleName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [lastNameError, setLastNameError] = useState(false)
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState({
-    value: '',
-    touched: false
+  const router = useRouter()
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid }
+  } = useForm({
+    defaultValues: {
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      role: 'student',
+      status: '',
+      mobile: '',
+      email: ''
+    }
   })
-  const [emailError, setEmailError] = useState(false)
-   const [mobile, setMobile] = useState({
-     value: '',
-     touched: false
-   })
-  const [role, setRole] = useState('')
-  const [status, setStatus] = useState('')
-  const UserFirstName = event => {
-     const value = event.target.value
-       setFirstName(value)   
-     // Validation for minimum 3 characters and maximum 20 characters
-     if (value.length >= 3 && value.length <= 20) {
-       setFirstNameError(false) // Reset error when within the valid range
-     } else {
-       setFirstNameError(true) // Set error when outside the valid range
-     }
-  }
-  const UserLastName = event => {
-    const value = event.target.value
 
-    // Validation for minimum 3 characters and maximum 20 characters
-    if (value.length >= 3 && value.length <= 20) {
-      setLastName(value)
-      setLastNameError(false) // Reset error when within the valid range
+  const [settings, setSettings] = useState('')
+
+  // ** Get Settings
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AuthApi.regCommonSettings()
+        setSettings(res && res.payload)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const handleFormSubmit = async data => {
+    if (isValid) {
+      try {
+        const res = await UserApi.createUser(data)
+        if (res.success == true) {
+          toast.success('User created successfully')
+          setTimeout(() => {
+            router.push('/users')
+          }, 3000)
+        } else {
+          toast.error('Failed to create user')
+        }
+      } catch (error) {
+        console.log(error)
+      }
     } else {
-      setLastNameError(true) // Set error when outside the valid range
-    }
-  }
-  const isEmailValid = value => {
-    // Simple email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(value)
-  }
-  const UserEmail = event => {
-    const value = event.target.value
-    setEmail({
-      value: value,
-
-    })
-  }
-  const UserMobile = event => {
-    const value = event.target.value
-    // Validation for numeric values only
-    if (/^\d*$/.test(value)) {
-      setMobile({
-        value: value,
-
-      })
-    }
-  }
-  const UserName = e => {
-    const value = e.target.value
-
-    // Validate the user name
-    const isValidUserName = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/g.test(value)
-
-    setUserName(value)
-
-    // Update error state based on validation
-    if (!isValidUserName) {
-      setUserNameError('Invalid user name')
-    } else {
-      setUserNameError('')
-    }
-  }
-  const formData = {
-    first_name: firstName,
-    middle_name: middleName,
-    last_name: lastName,
-    username: userName,
-    role: role,
-    status: status,
-    mobile: mobile.value,
-    email: email.value
-  }
-  const handleFormSubmit = async e => {
-    e.preventDefault()
-    // const formData = new FormData()
-    // setFormData(Data)
-    const Data = serialize(formData)
-    // console.log(formData)
-    // return
-    try {
-      // const response = await fetch(`${BASE_URL}/users/add`, requestOptions)
-      const res = await UserApi.createUser(Data)
-      console.log(res)
-      
-    } catch (error) {
-      console.log(error)
+      console.log('Form has validation errors')
     }
   }
 
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12} spacing={2}>
-        <Card>
-          <CardHeader title='Create User' />
-          <CardContent>
-            <form onSubmit={handleFormSubmit}>
-              <Grid container spacing={5}>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    fullWidth
-                    required
-                    label='First Name'
-                    placeholder='First Name'
-                    name='firstName'
-                    value={firstName.value}
-                    onChange={UserFirstName}
-                    error={firstNameError}
-                    helperText={firstNameError ? 'Must be between 3 and 20 characters' : ''}
-                    inputProps={{
-                      minLength: 3, // Minimum length
-                      maxLength: 15 // Maximum length
-                    }}
-                  />
+    <>
+      <Grid container spacing={6}>
+        <Grid item xs={12} spacing={2}>
+          <Card>
+            <CardHeader title='Create User' />
+            <CardContent>
+              <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <Grid container spacing={2}>
+                  {settings && settings.auto_generate_username !== 'true' ? (
+                    <Grid item xs={12} sx={{ mt: 3 }}>
+                      <FormControl sx={{ width: '100%' }}>
+                        <TextField
+                          {...register('username')}
+                          label='Username'
+                          variant='outlined'
+                          name='username'
+                          pattern='[A-Za-z]{1,}'
+                          required
+                        />
+                      </FormControl>
+                    </Grid>
+                  ) : (
+                    ''
+                  )}
+
+                  <Grid item xs={12} md={4} sx={{ mt: 3 }}>
+                    <FormControl fullWidth>
+                      <Controller
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            label='First Name'
+                            variant='outlined'
+                            error={!!errors.first_name}
+                            helperText={errors.first_name && 'First name must be between 3 and 15 characters'}
+                          />
+                        )}
+                        control={control}
+                        name='first_name'
+                        rules={{
+                          required: 'First name is required',
+                          minLength: {
+                            value: 3,
+                            message: 'First name should be at least 3 characters'
+                          },
+                          maxLength: {
+                            value: 15,
+                            message: 'First name should not exceed 15 characters'
+                          }
+                        }}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={4} sx={{ mt: 3 }}>
+                    <FormControl fullWidth>
+                      <Controller
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            label='Middle Name'
+                            variant='outlined'
+                            error={!!errors.middle_name}
+                            helperText={errors.middle_name && 'Middle name must be between 3 and 15 characters'}
+                          />
+                        )}
+                        control={control}
+                        name='middle_name'
+                        rules={{
+                          minLength: {
+                            value: 3,
+                            message: 'Middle name should be at least 3 characters'
+                          },
+                          maxLength: {
+                            value: 15,
+                            message: 'Middle name should not exceed 15 characters'
+                          }
+                        }}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={4} sx={{ mt: 3 }}>
+                    <FormControl fullWidth>
+                      <Controller
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            label='Last Name'
+                            variant='outlined'
+                            error={!!errors.last_name}
+                            helperText={errors.last_name && 'Last name must be between 3 and 15 characters'}
+                          />
+                        )}
+                        control={control}
+                        name='last_name'
+                        rules={{
+                          required: 'Last name is required',
+                          minLength: {
+                            value: 3,
+                            message: 'Last name should be at least 3 characters'
+                          },
+                          maxLength: {
+                            value: 15,
+                            message: 'Last name should not exceed 15 characters'
+                          }
+                        }}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6} sx={{ mt: 3 }}>
+                    <FormControl sx={{ width: '100%' }}>
+                      <InputLabel id='type-select-label'>User Role</InputLabel>
+                      <Controller
+                        name='role'
+                        control={control}
+                        defaultValue='student' // Default value set to 'student'
+                        render={({ field }) => (
+                          <Select {...field} labelId='type-select-label' id='type-select' label='User Role' required>
+                            <MenuItem value='admin'>Admin</MenuItem>
+                            <MenuItem value='instructor'>Teacher</MenuItem>
+                            <MenuItem value='student'>Student</MenuItem>
+                          </Select>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6} sx={{ mt: 3 }}>
+                    <FormControl sx={{ width: '100%' }}>
+                      <InputLabel id='type-select-status'>Status</InputLabel>
+                      <Controller
+                        name='status'
+                        control={control}
+                        defaultValue='0'
+                        render={({ field }) => (
+                          <Select {...field} labelId='type-select-status' id='type-select' label='Status' required>
+                            <MenuItem value='1'>Active</MenuItem>
+                            <MenuItem value='0'>Inactive</MenuItem>
+                          </Select>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6} sx={{ mt: 3 }}>
+                    <FormControl sx={{ width: '100%' }}>
+                      <TextField
+                        {...register('email')}
+                        label='Email'
+                        variant='outlined'
+                        name='email'
+                        pattern='[A-Za-z]{1,}'
+                        required
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6} sx={{ mt: 3 }}>
+                    <FormControl sx={{ width: '100%' }}>
+                      <TextField
+                        {...register('mobile')}
+                        label='Mobile Number'
+                        variant='outlined'
+                        name='mobile'
+                        pattern='[A-Za-z]{1,}'
+                        required
+                      />
+                    </FormControl>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    fullWidth
-                    label='Middle Name'
-                    placeholder='Middle Name'
-                    name='Middle Name'
-                    value={middleName}
-                    onChange={e => setMiddleName(e.target.value)}
-                  />
+                <Grid container spacing={2}>
+                  <Button variant='contained' size='medium' type='submit' sx={{ mt: 5 }}>
+                    Create User
+                  </Button>
+                  <Button variant='contained' size='medium' component={Link} href='/user' sx={{ mt: 5, ml: 3 }}>
+                    Cancel
+                  </Button>
                 </Grid>
-                <Grid item xs={12} md={6} lg={4}>
-                  <TextField
-                    fullWidth
-                    required
-                    label='Last Name'
-                    placeholder='Last Name'
-                    name='Last Name'
-                    value={lastName.value}
-                    onChange={UserLastName}
-                    error={lastNameError}
-                    helperText={lastNameError ? 'Must be between 3 and 20 characters' : ''}
-                    inputProps={{
-                      minLength: 3, // Minimum length
-                      maxLength: 15 // Maximum length
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    required
-                    type='email'
-                    label='Email'
-                    placeholder='Email'
-                    name='Email'
-                    value={email.value}
-                    onChange={UserEmail}
-                    error={email.touched && !isEmailValid(email.value)}
-                    helperText={email.touched && !isEmailValid(email.value) ? 'Invalid email address' : ''}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    required
-                    label='Mobile No'
-                    placeholder='Mobile Number'
-                    name='Mobile'
-                    value={mobile.value}
-                    onChange={UserMobile}
-                    inputProps={{
-                      pattern: '^[0-9]*$', // Only allow numeric values
-                      maxLength: 10 // You can set the maximum length if needed
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <TextField
-                    fullWidth
-                    label='User Name'
-                    placeholder='User Name'
-                    name='User Name'
-                    value={userName}
-                    onChange={e => setUserName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id='demo-simple-select-label'>Role</InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='demo-simple-select'
-                      value={role}
-                      label='Role'
-                      onChange={e => setRole(e.target.value)}
-                    >
-                      <MenuItem value='superadmin'>Super Admin</MenuItem>
-                      <MenuItem value='admin'>Admin</MenuItem>
-                      <MenuItem value='teacher'>Teacher</MenuItem>
-                      <MenuItem value='student'>Student</MenuItem>
-                      <MenuItem value='parent'>Parent</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth>
-                    <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='demo-simple-select'
-                      value={status}
-                      label='status'
-                      onChange={e => setStatus(e.target.value)}
-                    >
-                      <MenuItem value={0}>Inactive</MenuItem>
-                      <MenuItem value={1}>Active</MenuItem>
-                      <MenuItem value={2}>Pending</MenuItem>
-                      <MenuItem value={3}>Archived</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box
-                    sx={{
-                      gap: 5,
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Button type='submit' variant='contained' size='large'>
-                      Save
-                    </Button>
-                    <Button type='submit' variant='contained' size='large'>
-                      Cancel
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
-            </form>
-          </CardContent>
-        </Card>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   )
 }
 
