@@ -1,17 +1,7 @@
 import React, { useState } from 'react'
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Link from '@mui/material/Link'
-import Box from '@mui/material/Box'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
+import { Grid,Card,TextField,Button,Link,Box,CardHeader,CardContent,InputLabel,MenuItem,FormControl,Select } from '@mui/material'
+
 import serialize from 'serialize-javascript'
 // ** API
 import UserApi from 'src/api/User'
@@ -120,20 +110,6 @@ const CreateUser = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid container item xs={12} sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box
-          sx={{
-            display: { xs: 'block' }
-          }}
-        >
-          {/* <Breadcrumb /> */}
-        </Box>
-        <Box>
-          <Button component={Link} href={`/user/createuser`} variant='contained'>
-            Create User
-          </Button>
-        </Box>
-      </Grid>
       <Grid item xs={12} spacing={2}>
         <Card>
           <CardHeader title='Create User' />
@@ -265,11 +241,13 @@ const CreateUser = () => {
                       display: 'flex',
                       flexWrap: 'wrap',
                       alignItems: 'center',
-                      justifyContent: 'space-between'
                     }}
                   >
                     <Button type='submit' variant='contained' size='large'>
                       Save
+                    </Button>
+                    <Button type='submit' variant='contained' size='large'>
+                      Cancel
                     </Button>
                   </Box>
                 </Grid>

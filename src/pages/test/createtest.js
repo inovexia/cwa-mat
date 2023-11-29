@@ -24,12 +24,12 @@ const CreateTest = () => {
     <Grid container spacing={6}>
       <Grid item xs={12} spacing={2}>
         <Card>
-          <CardHeader title='Test Setting' />
+          <CardHeader title='Create Test' />
           <CardContent>
             <form>
               <Grid container spacing={5}>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth required label='Marks Per Question' name='Marks Per Question' />
+                  <TextField fullWidth required label='Test Title' name='Test Title' />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField fullWidth label='Number of attempts' name='Number of attempts' />
