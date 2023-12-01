@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
+import serialize from 'serialize-javascript'
 
 // ** MUI Imports
 import {
@@ -10,7 +11,6 @@ import {
   TextField,
   Button,
   Link,
-  Box,
   CardHeader,
   CardContent,
   InputLabel,
@@ -25,12 +25,10 @@ import AuthApi from 'src/api/Auth'
 
 const CreateUser = () => {
   const router = useRouter()
-
   const {
     control,
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid }
   } = useForm({
     defaultValues: {
@@ -45,6 +43,7 @@ const CreateUser = () => {
   })
 
   const [settings, setSettings] = useState('')
+  const [reqField, setReqField] = useState('')
 
   // ** Get Settings
   useEffect(() => {
@@ -59,21 +58,41 @@ const CreateUser = () => {
 
     fetchData()
   }, [])
+  // ** Get Required Field
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AuthApi.RegRequiredField()
+        setReqField(res && res.payload)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const handleFormSubmit = async data => {
     if (isValid) {
       try {
-        const res = await UserApi.createUser(data)
-        if (res.success == true) {
+        const formData = new FormData()
+
+        Object.entries(data).forEach(([key, value]) => {
+          formData.append(key, value)
+        })
+        const res = await UserApi.createUser(formData)
+
+        if (res.success === true) {
           toast.success('User created successfully')
           setTimeout(() => {
-            router.push('/users')
+            router.push('/user')
           }, 3000)
         } else {
           toast.error('Failed to create user')
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
+        toast.error('An error occurred while creating the user')
       }
     } else {
       console.log('Form has validation errors')
@@ -83,7 +102,7 @@ const CreateUser = () => {
   return (
     <>
       <Grid container spacing={6}>
-        <Grid item xs={12} spacing={2}>
+        <Grid item xs={12}>
           <Card>
             <CardHeader title='Create User' />
             <CardContent>
@@ -200,7 +219,7 @@ const CreateUser = () => {
                           <Select {...field} labelId='type-select-label' id='type-select' label='User Role' required>
                             <MenuItem value='superadmin'>Super Admin</MenuItem>
                             <MenuItem value='admin'>Admin</MenuItem>
-                            <MenuItem value='instructor'>Instructor</MenuItem>
+                            <MenuItem value='teacher'>Instructor</MenuItem>
                             <MenuItem value='student'>Student</MenuItem>
                             <MenuItem value='parent'>Parent</MenuItem>
                           </Select>
@@ -226,26 +245,46 @@ const CreateUser = () => {
                   </Grid>
                   <Grid item xs={12} md={6} sx={{ mt: 3 }}>
                     <FormControl sx={{ width: '100%' }}>
-                      <TextField
-                        {...register('email')}
-                        label='Email'
-                        variant='outlined'
-                        name='email'
-                        pattern='[A-Za-z]{1,}'
-                        required
-                      />
+                      {reqField && reqField.email ? (
+                        <TextField
+                          {...register('email')}
+                          label='Email'
+                          variant='outlined'
+                          name='email'
+                          pattern='[A-Za-z]{1,}'
+                          required
+                        />
+                      ) : (
+                        <TextField
+                          {...register('email')}
+                          label='Email'
+                          variant='outlined'
+                          name='email'
+                          pattern='[A-Za-z]{1,}'
+                        />
+                      )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={6} sx={{ mt: 3 }}>
                     <FormControl sx={{ width: '100%' }}>
-                      <TextField
-                        {...register('mobile')}
-                        label='Mobile Number'
-                        variant='outlined'
-                        name='mobile'
-                        pattern='[A-Za-z]{1,}'
-                        required
-                      />
+                      {reqField && reqField.mobile ? (
+                        <TextField
+                          {...register('mobile')}
+                          label='Mobile Number'
+                          variant='outlined'
+                          name='mobile'
+                          pattern='[A-Za-z]{1,}'
+                          required
+                        />
+                      ) : (
+                        <TextField
+                          {...register('mobile')}
+                          label='Mobile Number'
+                          variant='outlined'
+                          name='mobile'
+                          pattern='[A-Za-z]{1,}'
+                        />
+                      )}
                     </FormControl>
                   </Grid>
                 </Grid>
