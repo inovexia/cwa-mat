@@ -17,6 +17,7 @@ import axios from 'axios'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+import TabsNav from './tab'
 
 const SingleUser = () => {
   return (
@@ -57,7 +58,7 @@ const SingleUser = () => {
             >
               <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
                 <Typography variant='h5' sx={{ mb: 4, fontSize: '1.375rem' }}>
-                  Full Name
+                  John Doe
                 </Typography>
                 <Box
                   sx={{
@@ -69,17 +70,17 @@ const SingleUser = () => {
                   <Box
                     sx={{ mr: 4, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}
                   >
-                    {/* <Icon icon={designationIcon} /> */}
+                    <Icon icon='mdi:user' />
                     <Typography sx={{ color: 'text.secondary', fontWeight: 600 }}>Student</Typography>
                   </Box>
                   <Box
                     sx={{ mr: 4, display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}
                   >
-                    {/* <Icon icon='mdi:map-marker-outline' /> */}
+                    <Icon icon='mdi:location' />
                     <Typography sx={{ color: 'text.secondary', fontWeight: 600 }}>India</Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'text.secondary' } }}>
-                    {/* <Icon icon='mdi:calendar-blank-outline' /> */}
+                    <Icon icon='fluent-mdl2:date-time' />
                     <Typography sx={{ color: 'text.secondary', fontWeight: 600 }}>Joined 20 Nov, 2023</Typography>
                   </Box>
                 </Box>
@@ -91,62 +92,9 @@ const SingleUser = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Card>
-          <CardHeader title='About' />
-          <CardContent>
-            <Box
-              sx={{
-                gap: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                '&:not(:last-of-type)': { mb: 4 },
-                color: theme => theme.palette.primary.main
-              }}
-            >
-              <div>
-                <Typography variant='body1'>All Tests</Typography>
-              </div>
-              <div>
-                <Icon icon='gg:check-o' />
-              </div>
-            </Box>
-            <Box
-              sx={{
-                gap: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                '&:not(:last-of-type)': { mb: 4 },
-                color: theme => theme.palette.primary.main
-              }}
-            >
-              <div>
-                <Typography variant='body1'>Add Test</Typography>
-              </div>
-              <div>
-                <Icon icon='icons8:plus' />
-              </div>
-            </Box>
-            <Box
-              sx={{
-                gap: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                '&:not(:last-of-type)': { mb: 4 },
-                color: theme => theme.palette.primary.main
-              }}
-            >
-              <div>
-                <Typography variant='body1'>Delete Test</Typography>
-              </div>
-              <div>
-                <Icon icon='mdi:delete-outline' />
-              </div>
-            </Box>
-          </CardContent>
+          <TabsNav />
         </Card>
       </Grid>
     </Grid>
