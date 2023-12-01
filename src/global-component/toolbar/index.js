@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -10,9 +10,22 @@ import FormControl from '@mui/material/FormControl'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
+import Drawer from '@mui/material/Drawer';
 
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText'
+
+// ** Custom Table Components Imports
+import TableHeader from 'src/global-component/toolbar/TableHeader'
+import AddUserDrawer from 'src/global-component/toolbar/AddUserDrawer'
 const Toolbar = () => {
-
+    const [value, setValue] = useState('')
+    const [addUserOpen, setAddUserOpen] = useState(false)
+    const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+    const handleFilter = useCallback(val => {
+      setValue(val)
+    }, [])
   return (
     <Grid container spacing={6}>
       <Grid
@@ -72,10 +85,9 @@ const Toolbar = () => {
           </TextField>
         </Box>
         <Box>
-          <Button variant='contained' color='primary'>
-            Create User
-          </Button>
+          <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
         </Box>
+        <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
       </Grid>
     </Grid>
   )

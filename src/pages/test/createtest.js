@@ -19,6 +19,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormLabel from '@mui/material/FormLabel'
 // ** API
 import UserApi from 'src/api/User'
+import ReactDraftWysiwyg from 'src/@core/components/react-draft-wysiwyg'
 const CreateTest = () => {
   return (
     <Grid container spacing={6}>
@@ -29,40 +30,43 @@ const CreateTest = () => {
             <form>
               <Grid container spacing={5}>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth required label='Test Title' name='Test Title' />
+                  <TextField fullWidth required label='Title' name='Title' />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth label='Number of attempts' name='Number of attempts' />
+                  <TextField select label='Type' fullWidth>
+                    <MenuItem value={10}>Evaluated</MenuItem>
+                    <MenuItem value={20}>Practice</MenuItem>
+                    <MenuItem value={30}>Quiz</MenuItem>
+                  </TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
+                    label='Start Date'
+                    type='date' // Set the type to "date" for a date picker
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    variant='outlined'
                     fullWidth
-                    required
-                    label='Test Duration(in minutes)'
-                    placeholder='Last Name'
-                    name='Last Name'
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextField fullWidth required label='Negative Marking' name='Negative Marking' />
+                  <TextField
+                    label='End Date'
+                    type='date' // Set the type to "date" for a date picker
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    variant='outlined'
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <TextField fullWidth required label='Passing Marks' name='Passing Marks' />
+                  <InputLabel htmlFor='' style={{ color: 'black', marginBottom: '10px' }}>
+                    Description
+                  </InputLabel>
+                  <ReactDraftWysiwyg />
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControl>
-                    <FormLabel id='demo-radio-buttons-group-label'>Show Timer</FormLabel>
-                    <RadioGroup
-                      aria-labelledby='demo-radio-buttons-group-label'
-                      defaultValue='Yes'
-                      name='radio-buttons-group'
-                    >
-                      <FormControlLabel value='Yes' control={<Radio />} label='Yes' />
-                      <FormControlLabel value='No' control={<Radio />} label='No' />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-
                 <Grid item xs={12}>
                   <Box
                     sx={{
@@ -70,9 +74,11 @@ const CreateTest = () => {
                       display: 'flex',
                       flexWrap: 'wrap',
                       alignItems: 'center',
-                      justifyContent: 'space-between'
                     }}
                   >
+                    <Button type='submit' variant='outlined' size='large'>
+                      Cancel
+                    </Button>
                     <Button type='submit' variant='contained' size='large'>
                       Save
                     </Button>
