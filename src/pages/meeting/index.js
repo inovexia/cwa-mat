@@ -33,10 +33,10 @@ import Icon from 'src/@core/components/icon'
 import Toolbar from 'src/global-component/toolbar'
 import DeleteUser from 'src/global-component/user/deleteuser'
 import SwitchField from 'src/global-component/formelement/Switch'
-
+import TableBasic from './table'
 // ** Style
 
-const User = () => {
+const AllMeeting = () => {
   // for action dropdown
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -69,7 +69,7 @@ const User = () => {
         <Toolbar />
       </Grid>
       <Grid item xs={12}>
-        <Card>
+        {/* <Card>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -129,10 +129,11 @@ const User = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Card>
+        </Card> */}
+        <TableBasic/>
       </Grid>
     </Grid>
   )
 }
 
-export default User
+export default AllMeeting

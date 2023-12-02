@@ -63,12 +63,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>Preview Test</Typography>
               </div>
               <div>
-                <Icon
-                  icon='mdi:delete-outline'
-                  sx={{
-                    pr: 2
-                  }}
-                />
+                <Icon icon='carbon:view' />
               </div>
             </Box>
             <Box
@@ -85,12 +80,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>Import Question</Typography>
               </div>
               <div>
-                <Icon
-                  icon='mdi:delete-outline'
-                  sx={{
-                    pr: 2
-                  }}
-                />
+                <Icon icon='material-symbols:download' />
               </div>
             </Box>
           </CardContent>
@@ -148,7 +138,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>Edit Test</Typography>
               </div>
               <div>
-                <Icon icon='mdi:delete-outline' />
+                <Icon icon='material-symbols:edit' />
               </div>
             </Box>
             <Box
@@ -165,7 +155,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>Setting</Typography>
               </div>
               <div>
-                <Icon icon='mdi:delete-outline' />
+                <Icon icon='uil:setting' />
               </div>
             </Box>
             <Box
@@ -230,7 +220,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>My Submission Report</Typography>
               </div>
               <div>
-                <Icon icon='line-md:switch' />
+                <Icon icon='gg:check-o' />
               </div>
             </Box>
             <Box
@@ -247,7 +237,7 @@ const ManageTest = () => {
                 <Typography variant='body1'>All Submission</Typography>
               </div>
               <div>
-                <Icon icon='mdi:pencil-outline' />
+                <Icon icon='gg:check-o' />
               </div>
             </Box>
           </CardContent>
