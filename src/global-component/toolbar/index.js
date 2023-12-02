@@ -43,9 +43,12 @@ const Toolbar = () => {
           variant='outlined'
           size='small'
           fullWidth
+          value={searchTerm}
+          onChange={handleSearchInputChange}
+          onKeyPress={handleKeyPress}
           InputProps={{
             endAdornment: (
-              <IconButton>
+              <IconButton onClick={handleSearch}>
                 <Icon icon='ic:baseline-search' />
               </IconButton>
             )
@@ -63,13 +66,13 @@ const Toolbar = () => {
           justifyContent: 'end'
         }}
       >
-        <Box>
+        {/* <Box>
           <TextField select label='Select' size='small'>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </TextField>
-        </Box>
+        </Box> */}
         <Box>
           <TextField select label='Filter By' size='small'>
             <MenuItem value={10}>Ten</MenuItem>

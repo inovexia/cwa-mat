@@ -5,4 +5,5 @@ export default class AuthApi {
 
   static logIn = async data => await AuthenticatedReq('/auth/login', 'POST', data)
   static regCommonSettings = async () => await AuthenticatedReq('/settings/registration/common', 'GET')
+  static RegRequiredField = async () => await AuthenticatedReq('/settings/registration/valid_fields', 'GET')
 }
